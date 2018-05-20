@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class HeroService {
 
-  private heroesUrl = 'api/heroes';  // URL to web api
+  readonly heroesUrl = 'api/heroes';  // URL to web api
   private heroes: Hero[] = [] ;
 
   constructor(
@@ -59,7 +59,7 @@ export class HeroService {
   }
 
   /** DELETE a hero */
-  deleteHero(hero: Hero | number): Observable<Hero>{
+  deleteHero(hero: Hero | number): Observable<Hero> {
     const id = typeof hero === 'number' ? hero : hero.id;
     const url  = `${this.heroesUrl}/${id}`;
 
@@ -72,9 +72,9 @@ export class HeroService {
 
   /* Get heroes with a filter in the name */
   searchHeroes(term: string): Observable<Hero[]> {
-    if(!term.trim()){ return of([])}
+    if (!term.trim()) { return of([]); }
 
-    let url = `${this.heroesUrl}/?name=${term}`;
+    const url = `${this.heroesUrl}/?name=${term}`;
 
     return this.http.get<Hero[]>(url)
     .pipe(
@@ -106,6 +106,7 @@ export class HeroService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    this.messageService.add('HeroService: ' + message);
+    // this.messageService.add('HeroService: ' + message);
+    console.log('HeroService: ' + message);
   }
 }
